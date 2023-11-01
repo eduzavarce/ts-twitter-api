@@ -2,7 +2,6 @@ import { NextFunction, Request, Response } from "express";
 
 import { UsersRepository } from "../../users/repository/usersRepository";
 import { throwError } from "../error/jsonError";
-import { AuthRequest } from "./interfaces/AuthRequest";
 
 export const validateAuth = (req: Request, _res: Response, next: NextFunction): void => {
 	try {
@@ -14,13 +13,8 @@ export const validateAuth = (req: Request, _res: Response, next: NextFunction): 
 		if (bearer !== "Bearer" || !accessToken) {
 			throwError("Authorization header not found", 401);
 		}
-		const token = UsersRepository.verifyAccessToken(accessToken);
-		req.auth = {
-			uuid: token.uuid,
-			username: token.username,
-			avatar: token.avatar,
-			expiresIn: token.expiresIn,
-		} as AuthRequest["auth"];
+		req.auth = UsersRepository.verifyAccessToken(accessToken);
+
 		next();
 	} catch (error) {
 		next(error);
