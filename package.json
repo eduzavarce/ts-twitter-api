@@ -10,7 +10,7 @@
     "lint"    : "eslint --ignore-path .gitignore . --ext .ts",
     "lint:fix": "npm run lint -- --fix",
     "test"    : "jest --verbose",
-    "createDB": "ts-node ./src/infrastructure/database/createDB.ts"
+    "createDB": "ts-node createDB/createDB.ts"
   },
   "author"         : "",
   "license"        : "ISC",
